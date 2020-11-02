@@ -1,0 +1,65 @@
+body {
+    padding: 20px;
+    background-color: #f0fafb;
+    border-top-style: solid;
+    border-top-width: 100px;
+    border-top-color:#5da4a6;
+}
+
+div {
+    font-size: 20px;
+    font-family: monospace;
+}
+
+#listOuter li {
+    list-style-type: none;
+}
+
+companyName, newTag, featured, frameworks {
+    font-size: 15px;
+    padding-right: 5px;
+    margin-left: 10px;
+}
+
+newTag, featured, frameworks {
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+companyName, jobDescription, infoFirst {
+    margin-left: 30px;
+}
+
+companyName {
+    color: #5da4a6;
+}
+
+newTag {
+    background-color: #5da4a6;
+}
+
+featured {
+    color: white;
+    background-color: #2a3a39;
+}
+
+frameworks {
+    color: #5da4a6;
+    background-color: #eef7f6;
+    float: right;
+    margin-left: 10px;
+}
+
+info, infoFirst {
+    font-size: 10px;
+    color: gray;
+}
+
+.well {
+    background: white;
+    border-left-width: 3px;
+}
+
+.well:hover {
+    border-left-color: #5da4a6;
+}
