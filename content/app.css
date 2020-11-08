@@ -18,16 +18,15 @@ div {
 companyName, newTag, featured, frameworks {
     font-size: 15px;
     padding-right: 5px;
+}
+
+newTag, featured, frameworks {
     margin-left: 10px;
 }
 
 newTag, featured, frameworks {
     padding-left: 5px;
     border-radius: 5px;
-}
-
-companyName, jobDescription, infoFirst {
-    margin-left: 30px;
 }
 
 companyName {
@@ -48,6 +47,11 @@ frameworks {
     background-color: #eef7f6;
     float: right;
     margin-left: 10px;
+}
+
+frameworks:hover {
+    color: white;
+    background-color: #5da4a6;
 }
 
 info, infoFirst {

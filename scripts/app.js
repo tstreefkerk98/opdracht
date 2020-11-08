@@ -31,41 +31,45 @@ function setMainLayout(assignments) {
         var assignment = assignments[i];
 
         layout.push(
-            "<div class='row'>",
-            "<div class='col-md-12'>",
             "<div class='well'>",
-            "<div class='col-md-1'>",
-            "<img src=", assignment.logo, " />",
-            "</div>",
-            "<ul id='listOuter'>",
-            "<li>",
-            "<companyName>", assignment.company, "</companyName>",
-            isNew(assignment.isNew),
-            isFeatured(assignment.featured),
-            "</li>",
-            "<li>",
-            "<jobDescription>", assignment.position, "</jobDescription>");
+                "<div class='row'>",
+                    "<div class='col-md-1'>",
+                        "<img src=", assignment.logo, " />",
+                    "</div>",
+                    "<div class='col-md-11'>",
+                        "<ul id='listOuter'>",
+                            "<li>",
+                                "<companyName>", assignment.company, "</companyName>",
+                                isNew(assignment.isNew),
+                                isFeatured(assignment.featured),
+                            "</li>",
+                            "<li>",
+                                "<jobDescription>", assignment.position, "</jobDescription>");
 
-        layout.push(getFrameworks(assignment, false));
-        layout.push(getFrameworks(assignment, true));
+                            layout.push(getFrameworks(assignment, false));
+                            layout.push(getFrameworks(assignment, true));
 
-        layout.push(
-            "<frameworks>", assignment.level, "</frameworks>",
-            "<frameworks>", assignment.role, "</frameworks>",
-            "</li>",
-            "<li>",
-            "<infoFirst>", assignment.postedAt, " <span>&#8226;</span> </infoFirst>",
-            "<info>", assignment.contract, " <span>&#8226;</span> </info>",
-            "<info>", assignment.location, "</info>",
-            "</li>",
-            "</ul>",
-            "</div>",
-            "</div>",
+                            layout.push(
+                                "<frameworks onclick='temp()'>", assignment.level, "</frameworks>",
+                                "<frameworks>", assignment.role, "</frameworks>",
+                            "</li>",
+                            "<li>",
+                                "<infoFirst>", assignment.postedAt, " <span>&#8226;</span> </infoFirst>",
+                                "<info>", assignment.contract, " <span>&#8226;</span> </info>",
+                                "<info>", assignment.location, "</info>",
+                            "</li>",
+                        "</ul>",
+                    "</div>",
+                "</div>",
             "</div>",
         );
     }
 
     document.getElementById("mainLayout").innerHTML = layout.join("");
+}
+
+function temp() {
+    alert("halsdkfjasd");
 }
 
 // Based on the boolean `isNew`, the "NEW!" tag is retrieved.
