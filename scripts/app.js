@@ -1,36 +1,31 @@
 // Main function for this application.
 function main() {
-    var assignments = getAssignments();
-    setMainLayout(assignments);
+    readJsonFile();
 }
 
-// Retrieves the assignments from the JSON file which for now is located at the bottom of this file.
-function getAssignments() {
-    var assignements = [];
-
-    var jsonFile = getJsonFile();
-    var len = jsonFile.length;
-
-    for (i = 0; i < len; i++) {
-        var assignment = new Assignment(jsonFile[i].id, jsonFile[i].company, jsonFile[i].logo, jsonFile[i].new,
-            jsonFile[i].featured, jsonFile[i].position, jsonFile[i].role, jsonFile[i].level, jsonFile[i].postedAt,
-            jsonFile[i].contract, jsonFile[i].location, jsonFile[i].languages, jsonFile[i].tools);
-
-        assignements.push(assignment);
-    }
-
-    return assignements;
+// Reads the JSON file, iterates over and processes the JSON objects.
+function readJsonFile() {
+    $.getJSON("data.json", function (json) {
+        $.each(json, function (i, element) {
+            var assignmentObj = createAssignmentObj(element);
+            var assignmentHtml = createAssignmentHtml(assignmentObj);
+            setAssignmentDiv(assignmentHtml);
+        });
+    });
 }
 
-// Loops through the assignments and inserts the proper layout for each one.
-function setMainLayout(assignments) {
+// Creates the Assignment object.
+function createAssignmentObj(element) {
+    return new Assignment(element.id, element.company, element.logo, element.new,element.featured, element.position, 
+        element.role, element.level, element.postedAt, element.contract, element.location, element.languages, element.tools);
+}
+
+// Creates the HTML for the Assignment object.
+function createAssignmentHtml(assignment) {
     var layout = [];
 
-    var assignmentsLength = assignments.length;
-    for (i = 0; i < assignmentsLength; i++) {
-        var assignment = assignments[i];
-
-        layout.push(
+    layout.push(
+        "<div id='assignment'>",
             "<div class='well'>",
                 "<div class='row'>",
                     "<div class='col-md-1'>",
@@ -39,18 +34,18 @@ function setMainLayout(assignments) {
                     "<div class='col-md-11'>",
                         "<ul id='listOuter'>",
                             "<li>",
-                                "<companyName>", assignment.company, "</companyName>",
+                                "<companyName onclick='temp()'>", assignment.company, "</companyName>",
                                 isNew(assignment.isNew),
                                 isFeatured(assignment.featured),
                             "</li>",
                             "<li>",
                                 "<jobDescription>", assignment.position, "</jobDescription>");
 
-                            layout.push(getFrameworks(assignment, false));
-                            layout.push(getFrameworks(assignment, true));
+                                layout.push(getFrameworks(assignment, false));
+                                layout.push(getFrameworks(assignment, true));
 
-                            layout.push(
-                                "<frameworks onclick='temp()'>", assignment.level, "</frameworks>",
+                                layout.push(
+                                "<frameworks onclick='addFilterParameter(this)'>", assignment.level, "</frameworks>",
                                 "<frameworks>", assignment.role, "</frameworks>",
                             "</li>",
                             "<li>",
@@ -62,14 +57,25 @@ function setMainLayout(assignments) {
                     "</div>",
                 "</div>",
             "</div>",
-        );
-    }
+        "</div>",
+    );
 
-    document.getElementById("mainLayout").innerHTML = layout.join("");
+    return layout.join("");
 }
 
-function temp() {
-    alert("halsdkfjasd");
+// This was an attempt to implement the filter paramter buttons but I got stuck.
+function addFilterParameter(element) {
+    var text = element.innerHTML;
+    var textObj = document.createElement("filterButton");
+    textObj.innerHTML = text;
+    document.getElementById("row1").appendChild(textObj);
+}
+
+// Creates and sets the Assignment object div.
+function setAssignmentDiv(assignmentHtml) {
+    var assignementDiv = document.createElement("div");
+    assignementDiv.innerHTML = assignmentHtml;
+    document.getElementById("mainLayout").appendChild(assignementDiv);
 }
 
 // Based on the boolean `isNew`, the "NEW!" tag is retrieved.
@@ -116,158 +122,3 @@ class Assignment {
     }
 }
 
-// The JSON file, pasted here because I couldn't get it working otherwise.
-function getJsonFile() {
-    return [
-        {
-            "id": 1,
-            "company": "Photosnap",
-            "logo": "./images/photosnap.svg",
-            "new": true,
-            "featured": true,
-            "position": "Senior Frontend Developer",
-            "role": "Frontend",
-            "level": "Senior",
-            "postedAt": "1d ago",
-            "contract": "Full Time",
-            "location": "USA Only",
-            "languages": ["HTML", "CSS", "JavaScript"],
-            "tools": []
-        },
-        {
-            "id": 2,
-            "company": "Manage",
-            "logo": "./images/manage.svg",
-            "new": true,
-            "featured": true,
-            "position": "Fullstack Developer",
-            "role": "Fullstack",
-            "level": "Midweight",
-            "postedAt": "1d ago",
-            "contract": "Part Time",
-            "location": "Remote",
-            "languages": ["Python"],
-            "tools": ["React"]
-        },
-        {
-            "id": 3,
-            "company": "Account",
-            "logo": "./images/account.svg",
-            "new": true,
-            "featured": false,
-            "position": "Junior Frontend Developer",
-            "role": "Frontend",
-            "level": "Junior",
-            "postedAt": "2d ago",
-            "contract": "Part Time",
-            "location": "USA Only",
-            "languages": ["JavaScript"],
-            "tools": ["React", "Sass"]
-        },
-        {
-            "id": 4,
-            "company": "MyHome",
-            "logo": "./images/myhome.svg",
-            "new": false,
-            "featured": false,
-            "position": "Junior Frontend Developer",
-            "role": "Frontend",
-            "level": "Junior",
-            "postedAt": "5d ago",
-            "contract": "Contract",
-            "location": "USA Only",
-            "languages": ["CSS", "JavaScript"],
-            "tools": []
-        },
-        {
-            "id": 5,
-            "company": "Loop Studios",
-            "logo": "./images/loop-studios.svg",
-            "new": false,
-            "featured": false,
-            "position": "Software Engineer",
-            "role": "FullStack",
-            "level": "Midweight",
-            "postedAt": "1w ago",
-            "contract": "Full Time",
-            "location": "Worldwide",
-            "languages": ["JavaScript"],
-            "tools": ["Ruby", "Sass"]
-        },
-        {
-            "id": 6,
-            "company": "FaceIt",
-            "logo": "./images/faceit.svg",
-            "new": false,
-            "featured": false,
-            "position": "Junior Backend Developer",
-            "role": "Backend",
-            "level": "Junior",
-            "postedAt": "2w ago",
-            "contract": "Full Time",
-            "location": "UK Only",
-            "languages": ["Ruby"],
-            "tools": ["RoR"]
-        },
-        {
-            "id": 7,
-            "company": "Shortly",
-            "logo": "./images/shortly.svg",
-            "new": false,
-            "featured": false,
-            "position": "Junior Developer",
-            "role": "Frontend",
-            "level": "Junior",
-            "postedAt": "2w ago",
-            "contract": "Full Time",
-            "location": "Worldwide",
-            "languages": ["HTML", "JavaScript"],
-            "tools": ["Sass"]
-        },
-        {
-            "id": 8,
-            "company": "Insure",
-            "logo": "./images/insure.svg",
-            "new": false,
-            "featured": false,
-            "position": "Junior Frontend Developer",
-            "role": "Frontend",
-            "level": "Junior",
-            "postedAt": "2w ago",
-            "contract": "Full Time",
-            "location": "USA Only",
-            "languages": ["JavaScript"],
-            "tools": ["Vue", "Sass"]
-        },
-        {
-            "id": 9,
-            "company": "Eyecam Co.",
-            "logo": "./images/eyecam-co.svg",
-            "new": false,
-            "featured": false,
-            "position": "Full Stack Engineer",
-            "role": "Fullstack",
-            "level": "Midweight",
-            "postedAt": "3w ago",
-            "contract": "Full Time",
-            "location": "Worldwide",
-            "languages": ["JavaScript", "Python"],
-            "tools": ["Django"]
-        },
-        {
-            "id": 10,
-            "company": "The Air Filter Company",
-            "logo": "./images/the-air-filter-company.svg",
-            "new": false,
-            "featured": false,
-            "position": "Front-end Dev",
-            "role": "Frontend",
-            "level": "Junior",
-            "postedAt": "1mo ago",
-            "contract": "Part Time",
-            "location": "Worldwide",
-            "languages": ["JavaScript"],
-            "tools": ["React", "Sass"]
-        }
-    ]
-}

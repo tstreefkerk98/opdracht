@@ -8,7 +8,7 @@
 
     <!-- Bootstrap css import -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    
+
     <!-- Jquery import, needed for javascript import -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -20,17 +20,22 @@
 
     <!-- Reference to script files -->
     <script src="scripts/app.js" type="application/javascript"></script>
-    
+
 </head>
 
-<!-- <body onload="main()">
-    <div class="container" id="mainLayout"></div>
-</body> -->
+<body onload="main()">
 
-<body>
-    <script>
-        $.getJSON("data.json", function(json) {
-            console.log(json);
-        });
-    </script>
+    <div id="fixed-filter">
+        <div class="container">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-12" id="row1">
+                        <div id="clearButton">Clear</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainLayout"></div>
 </body>
